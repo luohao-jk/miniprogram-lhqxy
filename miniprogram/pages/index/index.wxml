@@ -13,5 +13,5 @@
     </view>
   </view>
   
-  <view class="top_tip">{{bottomText}}</view>
+  <view class="bottom-tip">{{bottomText}}</view>
 </view>

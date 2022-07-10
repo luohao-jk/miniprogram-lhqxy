@@ -14,7 +14,7 @@ page {
   margin-bottom: 40rpx;
 }
 
-.top_tip {
+.bottom-tip {
   font-size: 28rpx;
   font-family: PingFang SC;
   font-weight: 400;

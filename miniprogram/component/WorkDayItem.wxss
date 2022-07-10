@@ -1,6 +1,36 @@
 /* component/WorkDayItem.wxss */
 .work-day-box {
   display: inline-block;
-  width: 3rem;
-  height: 3rem;
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 6px;
+  border: solid 2px #FFFFFF00;
+}
+
+.day {
+  display: block;
+  text-align: center;
+  font-size: 20px;
+  min-height: 28px;
+}
+
+.work {
+  text-align: center;
+  display: block;
+  font-size: 9px;
+  color: #AAAAAA;
+  min-height: 14px;
+}
+
+.today {
+  background: #0cbaf0;
+  color: #FFFFFF !important;
+}
+
+.selected {
+  border: solid 2px #0cbaf0;
+}
+
+.festival {
+  color: red ;
 }

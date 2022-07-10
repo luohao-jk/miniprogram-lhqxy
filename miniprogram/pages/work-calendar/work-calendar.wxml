@@ -1,8 +1,11 @@
 <!--index.wxml-->
-<view class="container">
+<view class="work-calendar-screen">
+  <view class="month-item" wx:key="month" wx:for="{{monthList}}" wx:for-item="month">
+    <view class="title">{{month.title}}</view>
+    <work-day-item id="day-{{day}}" data-date="{{day}}" bindtap="showDetail" wx:key="day" wx:for="{{month.dateList}}" wx:for-item="day" date="{{day}}"></work-day-item>
+  </view>
+</view>
 
-<view class="title">LH ♥ QXY</view>
-
-<view class="top_tip"></view>
-  <work-day-item date="{{date.getTime()}}"></work-day-item>
+<view wx:if="showDetial" class="dateDetail">
+  <text class="detail-first">{{detailFirstLine}}</text>
 </view>

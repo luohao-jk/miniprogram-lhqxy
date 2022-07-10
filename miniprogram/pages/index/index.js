@@ -1,6 +1,7 @@
 // index.js
 // const app = getApp()
 const { envList } = require('../../envList.js');
+const {tipTexts} = require('../../libs/tipText.js');
 const { newWorkTime } = require('../../util/workTimeUtils.js');
 
 let date = new Date();
@@ -9,7 +10,7 @@ let workDay = newWorkTime(date);
 Page({
   data: {
     showUploadTip: false,
-    bottomText: "生活不只眼前的苟且，还有诗何远方",
+    bottomText: "回忆永远是惆怅的。愉快的使人觉得:可惜已经完了,不愉快的想起来还是伤心",
     powerList: [{
       title: '工作时间',
       tip: workDay.workDayText,
@@ -19,8 +20,15 @@ Page({
     selectedEnv: envList[0],
     haveCreateCollection: false
   },
-  onReady() {    
-
+  onReady() {
+    this.setData({
+      bottomText: tipTexts[Math.floor(Math.random() * tipTexts.length)]
+    });
+    setInterval(() => {
+      this.setData({
+        bottomText: tipTexts[Math.floor(Math.random() * tipTexts.length)]
+      });
+    }, 10000);
   },
 
   jumpPage(e) {
