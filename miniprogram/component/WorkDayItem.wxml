@@ -1,0 +1,5 @@
+<!--component/WorkDayItem.wxml-->
+<view class="work-day-box">
+  <text>{{workDay.date.day}}</text>
+  <text>{{workDay.workDayText}}</text>
+</view>

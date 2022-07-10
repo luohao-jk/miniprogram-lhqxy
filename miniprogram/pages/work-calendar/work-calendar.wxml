@@ -1,0 +1,8 @@
+<!--index.wxml-->
+<view class="container">
+
+<view class="title">LH ♥ QXY</view>
+
+<view class="top_tip"></view>
+  <work-day-item date="{{date.getTime()}}"></work-day-item>
+</view>

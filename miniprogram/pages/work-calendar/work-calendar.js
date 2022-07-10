@@ -1,11 +1,11 @@
-// pages/work-time/worktime.js
+// pages/work-calendar/work-calendar.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    date: new Date()
   },
 
   /**

@@ -1,0 +1,6 @@
+/* component/WorkDayItem.wxss */
+.work-day-box {
+  display: inline-block;
+  width: 3rem;
+  height: 3rem;
+}

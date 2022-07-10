@@ -1,6 +1,10 @@
 // index.js
 // const app = getApp()
 const { envList } = require('../../envList.js');
+const { newWorkTime } = require('../../util/workTimeUtils.js');
+
+let date = new Date();
+let workDay = newWorkTime(date);
 
 Page({
   data: {
@@ -8,7 +12,7 @@ Page({
     bottomText: "生活不只眼前的苟且，还有诗何远方",
     powerList: [{
       title: '工作时间',
-      tip: '2022-07-05、周二、六月初七、治疗班',
+      tip: workDay.workDayText,
       showItem: false
     }],
     envList,
@@ -18,15 +22,10 @@ Page({
   onReady() {    
 
   },
-  todayText(e) {
-    let date = new Date();
-    
-  },
-
 
   jumpPage(e) {
     wx.navigateTo({
-      url: `/pages/${e.currentTarget.dataset.page}/index?envId=${this.data.selectedEnv.envId}`,
+      url: `/pages/work-calendar/work-calendar?envId=${this.data.selectedEnv.envId}`,
     });
   },
 
