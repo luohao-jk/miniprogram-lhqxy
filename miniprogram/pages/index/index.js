@@ -14,7 +14,8 @@ Page({
     powerList: [{
       title: '工作时间',
       tip: workDay.workDayText,
-      showItem: false
+      showItem: false,
+      href: "/pages/work-calendar/work-calendar"
     }],
     envList,
     selectedEnv: envList[0],
@@ -29,11 +30,15 @@ Page({
         bottomText: tipTexts[Math.floor(Math.random() * tipTexts.length)]
       });
     }, 10000);
+    wx.navigateTo({
+      url: `${this.data.powerList[0].href}?envId=${this.data.selectedEnv.envId}`,
+    });
   },
 
   jumpPage(e) {
+    let index = e.currentTarget.dataset.index;
     wx.navigateTo({
-      url: `/pages/work-calendar/work-calendar?envId=${this.data.selectedEnv.envId}`,
+      url: `${this.data.powerList[index].href}?envId=${this.data.selectedEnv.envId}`,
     });
   },
 

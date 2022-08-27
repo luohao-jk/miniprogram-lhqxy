@@ -34,3 +34,7 @@
 .festival {
   color: red ;
 }
+
+.holiday {
+  color: rgb(44, 7, 255);
+}

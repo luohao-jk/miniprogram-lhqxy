@@ -67,6 +67,12 @@ Component({
         hintText: hintText
       });
 
+      if (workDay.weekDay == 0 || workDay.weekDay == 6) {
+        this.setData({
+          dayClass: this.data.dayClass + " holiday"
+        })
+      }
+
       if (workDay.lunar.festival || workDay.lunar.lunarFestival) {
         this.setData({
           workClass: this.data.workClass + " festival"
@@ -80,6 +86,9 @@ Component({
    */
   methods: {
     setSelect() {
+      if (this.data.date === "EMPTY") {
+        return;
+      }
       if (isToday(this.data.date)) {
         return;
       }

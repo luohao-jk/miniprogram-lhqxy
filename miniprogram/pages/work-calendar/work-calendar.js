@@ -2,49 +2,14 @@
 
 const { weekDay, monthMaxDay, newWorkTime } = require("../../util/workTimeUtils");
 
-function createMonthObj(date = new Date()) {
-  date.setDate(1);
-  let paddingDayNum = weekDay(date) - 1;
-  if (paddingDayNum < 0) {
-    paddingDayNum += 7;
-  }
-  
-  let dayList = [];
-  for(let i = 0; i < paddingDayNum; i++) {
-    dayList.push("EMPTY");
-  }
-
-  let year = date.getFullYear();
-  let month = date.getMonth() + 1;
-  if (month < 10) {
-    month = "0" + month;
-  }
-  let maxDay = monthMaxDay(date);
-  for (let i = 1; i <= maxDay; i++) {
-    let day = i < 10 ? "0" + i : i;
-    dayList.push(year + "-" + month + "-" + day)
-  }
-
-  return {
-    title: year + "年" + month + "月",
-    dateList: dayList
-  }
-}
-
-let monthList = [];
-let loopDate = new Date();
-for (let i = 0; i < 12; i++) {
-  monthList.push(createMonthObj(loopDate))
-  loopDate.setMonth(loopDate.getMonth() + 1)
-}
-
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    monthList: monthList,
+    monthList: [],
+    loopDate: new Date(),
     showDetial: true,
     detailFirstLine: "",
     detailSedLine: "",
@@ -55,7 +20,47 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    this.setData({loopDate: new Date()})
+    this.loadNextYear();
+  },
 
+  loadNextYear() {
+    let monthList = this.data.monthList;
+    let loopDate = this.data.loopDate;
+    for (let i = 0; i < 12; i++) {
+      monthList.push(this.createMonthObj(loopDate))
+      loopDate.setMonth(loopDate.getMonth() + 1)
+    }
+    this.setData({monthList: monthList})
+  },
+
+  createMonthObj(date = new Date()) {
+    date.setDate(1);
+    let paddingDayNum = weekDay(date) - 1;
+    if (paddingDayNum < 0) {
+      paddingDayNum += 7;
+    }
+    
+    let dayList = [];
+    for(let i = 0; i < paddingDayNum; i++) {
+      dayList.push("EMPTY");
+    }
+  
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    if (month < 10) {
+      month = "0" + month;
+    }
+    let maxDay = monthMaxDay(date);
+    for (let i = 1; i <= maxDay; i++) {
+      let day = i < 10 ? "0" + i : i;
+      dayList.push(year + "-" + month + "-" + day)
+    }
+  
+    return {
+      title: year + "年" + month + "月",
+      dateList: dayList
+    }
   },
 
   /**
@@ -97,7 +102,7 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom() {
-
+    this.loadNextYear();
   },
 
   /**
@@ -109,6 +114,9 @@ Page({
 
   showDetail(e) {
     let selectDayText = e.currentTarget.dataset.date;
+    if (selectDayText === "EMPTY") {
+      return;
+    }
     this.selectComponent("#" + e.currentTarget.id).setSelect();
     if (this.data.lastSelected != null) {
       this.selectComponent("#" + this.data.lastSelected).unSelect();
