@@ -1,5 +1,6 @@
 // pages/work-calendar/work-calendar.js
 
+const {myConfig} = require("../../libs/myconfig");
 const { weekDay, monthMaxDay, newWorkTime } = require("../../util/workTimeUtils");
 
 Page({
@@ -10,6 +11,7 @@ Page({
   data: {
     monthList: [],
     loopDate: new Date(),
+    preLoopDate: null,
     showDetial: true,
     detailFirstLine: "",
     detailSedLine: "",
@@ -32,6 +34,26 @@ Page({
       loopDate.setMonth(loopDate.getMonth() + 1)
     }
     this.setData({monthList: monthList})
+  },
+
+  loadPreYear() {
+    if (this.data.preLoopDate == null) {
+      let preLoopDate = new Date();
+      preLoopDate.setMonth(preLoopDate.getMonth() - 1);
+      this.setData({
+        preLoopDate: preLoopDate
+      });
+    }
+
+    let loopDate = this.data.preLoopDate;
+    for (let i = 0; i < myConfig.loadMonthPreTime; i++) {
+      this.data.monthList.unshift(this.createMonthObj(loopDate));
+      loopDate.setMonth(loopDate.getMonth() - 1)
+    }
+
+    this.setData({
+      monthList: this.data.monthList
+    })
   },
 
   createMonthObj(date = new Date()) {
@@ -95,7 +117,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-
+    this.loadPreYear();
   },
 
   /**

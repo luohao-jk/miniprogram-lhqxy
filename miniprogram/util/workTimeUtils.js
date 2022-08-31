@@ -1,4 +1,5 @@
 const { calendar } = require('../libs/calendar.js');
+const { myConfig } = require('../libs/myconfig.js')
 //起始日期中隔了多少天
 let countDays = function(beginDate, endDate) {
   if (endDate == null) {
@@ -31,7 +32,7 @@ let weekDay = function(date = new Date()) {
 let workFlow = ['治疗', '护理', '一班', '三班', '二班', '休'];
 let weekFlow = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
 let workDay = function (date = new Date()) {
-    let countDay = countDays(new Date("2022-06-29"), date);
+    let countDay = countDays(new Date(myConfig.startWorkFlow), date);
     return workFlow[countDay % 6];
 }
 

@@ -10,6 +10,9 @@
  * @公历转农历：calendar.solar2lunar(1987,11,01); //[you can ignore params of prefix 0]
  * @农历转公历：calendar.lunar2solar(1987,09,10); //[you can ignore params of prefix 0]
  */
+
+const { myConfig } = require("./myconfig");
+
 let calendar = {
 
     /**
@@ -73,46 +76,12 @@ let calendar = {
     /**
      * 阳历节日
      */
-    festival: {
-        '1-1': {title: '元旦节'},
-        '2-14': {title: '情人节'},
-        '4-21': {title: '纪念日'},
-        '5-1': {title: '劳动节'},
-        '5-4': {title: '青年节'},
-        '6-1': {title: '儿童节'},
-        '9-10': {title: '教师节'},
-        '10-1': {title: '国庆节'},
-        '12-25': {title: '圣诞节'},
-        '3-8': {title: '妇女节'},
-        '3-12': {title: '植树节'},
-        '4-1': {title: '愚人节'},
-        '5-12': {title: '护士节'},
-        '7-1': {title: '建党节'},
-        '8-1': {title: '建军节'},
-        '12-24': {title: '平安夜'},
-    },
+    festival: myConfig.festival,
 
     /**
      * 农历节日
      */
-    lFestival: {
-        '12-30': {title: '除夕'},
-        '1-1': {title: '春节'},
-        '1-15': {title: '元宵节'},
-        '1-29': {title: '胖胖生日'},
-        '2-2': {title: '龙抬头'},
-        '5-5': {title: '端午节'},
-        '7-7': {title: '七夕节'},
-        '7-15': {title: '中元节'},
-        '8-15': {title: '中秋节'},
-        '8-21': {title: '老婆生日'},
-        '9-9': {title: '重阳节'},
-        '10-1': {title: '寒衣节'},
-        '10-15': {title: '下元节'},
-        '12-8': {title: '腊八节'},
-        '12-23': {title: '北方小年'},
-        '12-24': {title: '南方小年'},
-    },
+    lFestival: myConfig.lFestival,
 
     /**
      * 返回默认定义的阳历节日

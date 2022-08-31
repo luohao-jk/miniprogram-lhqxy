@@ -1,7 +1,7 @@
 // index.js
 // const app = getApp()
 const { envList } = require('../../envList.js');
-const {tipTexts} = require('../../libs/tipText.js');
+const { loadPrimose, myConfig } = require('../../libs/myconfig.js');
 const { newWorkTime } = require('../../util/workTimeUtils.js');
 
 let date = new Date();
@@ -10,7 +10,7 @@ let workDay = newWorkTime(date);
 Page({
   data: {
     showUploadTip: false,
-    bottomText: "回忆永远是惆怅的。愉快的使人觉得:可惜已经完了,不愉快的想起来还是伤心",
+    bottomText: "",
     powerList: [{
       title: '工作时间',
       tip: workDay.workDayText,
@@ -22,16 +22,33 @@ Page({
     haveCreateCollection: false
   },
   onReady() {
-    this.setData({
-      bottomText: tipTexts[Math.floor(Math.random() * tipTexts.length)]
-    });
-    setInterval(() => {
-      this.setData({
-        bottomText: tipTexts[Math.floor(Math.random() * tipTexts.length)]
+    loadPrimose.then(() => {
+      this.init();
+    }).catch(e => {
+      this.init();
+    })
+  },
+
+  init() {
+    this.randomTipTextInterval();
+    if (myConfig.autoJumpCalendar) {
+      wx.navigateTo({
+        url: `${this.data.powerList[0].href}?envId=${this.data.selectedEnv.envId}`,
       });
-    }, 10000);
-    wx.navigateTo({
-      url: `${this.data.powerList[0].href}?envId=${this.data.selectedEnv.envId}`,
+    }
+  },
+
+  randomTipTextInterval() {
+    this.randomTipText();
+    setTimeout(this.randomTipTextInterval, myConfig.randomTipTime * 1000)
+  },
+
+  randomTipText() {
+    if (myConfig.tipTexts.length === 0) {
+      return;
+    }
+    this.setData({
+      bottomText: myConfig.tipTexts[Math.floor(Math.random() * myConfig.tipTexts.length)]
     });
   },
 
@@ -39,37 +56,6 @@ Page({
     let index = e.currentTarget.dataset.index;
     wx.navigateTo({
       url: `${this.data.powerList[index].href}?envId=${this.data.selectedEnv.envId}`,
-    });
-  },
-
-  onClickDatabase(powerList) {
-    wx.showLoading({
-      title: '',
-    });
-    wx.cloud.callFunction({
-      name: 'quickstartFunctions',
-      config: {
-        env: this.data.selectedEnv.envId
-      },
-      data: {
-        type: 'createCollection'
-      }
-    }).then((resp) => {
-      if (resp.result.success) {
-        this.setData({
-          haveCreateCollection: true
-        });
-      }
-      this.setData({
-        powerList
-      });
-      wx.hideLoading();
-    }).catch((e) => {
-      console.log(e);
-      this.setData({
-        showUploadTip: true
-      });
-      wx.hideLoading();
     });
   }
 });
